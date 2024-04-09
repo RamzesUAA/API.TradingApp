@@ -1,20 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.TradingApp.Controllers
 {
-    [Route("order-book")]
     [ApiController]
-    public class OrderBookController : Controller
+    [Route("[controller]")]
+    public class OrderBookController : ControllerBase
     {
-        public OrderBookController()
+        private readonly IOrderBookService _orderBookService;
+
+        public OrderBookController(IOrderBookService orderBookService)
         {
-            
+            _orderBookService = orderBookService;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok("= )");    
+            try
+            {
+                var orderBook = await _orderBookService.GetOrderBookDataAsync();
+                return Ok(orderBook);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
     }
 }

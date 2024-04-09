@@ -1,6 +1,9 @@
-﻿namespace Domain.Services.Interfaces
+﻿using Domain.Models;
+
+namespace Domain.Services.Interfaces
 {
-    internal interface IOrderBookService
+    public interface IOrderBookService
     {
+        Task<MarketDepth> GetOrderBookDataAsync();
     }
 }

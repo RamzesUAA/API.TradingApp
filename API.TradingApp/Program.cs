@@ -1,3 +1,5 @@
+using Domain.Services.Implementation;
+using Domain.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Entities;
@@ -17,6 +19,10 @@ builder.Services.AddDbContext<TradingContext>(options =>
 {
     options.UseInMemoryDatabase("TradingData");
 });
+
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IOrderBookService, OrderBookService>();
+builder.Services.AddScoped<IAuditLogService, AuditLogService>();
 
 builder.Services.AddScoped<IRepository<MarketDepthAuditLog>, Repository<MarketDepthAuditLog>>();
 
