@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Persistence.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,11 @@ namespace Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.UseInMemoryDatabase("TradingData");
+            //optionsBuilder.EnableSensitiveDataLogging();
         }
+
+        public DbSet<MarketDepthAuditLog> MarketDepthAuditLogs { get; set; }
+
     }
 }
